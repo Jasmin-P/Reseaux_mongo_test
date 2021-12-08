@@ -17,6 +17,9 @@ public class DatabaseAccess : MonoBehaviour
     IMongoCollection<BsonDocument> collection;
     List<Player> listPlayers;
 
+    [SerializeField]
+    UIManager uiManager;
+
     void Start()
     {
         listPlayers = new List<Player>();
@@ -26,47 +29,33 @@ public class DatabaseAccess : MonoBehaviour
         database = client.GetDatabase("game");
         collection = database.GetCollection<BsonDocument>("players");
 
-        /*BsonDocument newItem = new BsonDocument { { "pseudo", "Player 1" } };
-        
-        collection.InsertOne(newItem);
-        */
 
-        //Debug.Log("item added");
+        GetPlayersInfos();
 
+
+        // Ajouter un joueur dans la DB
         Player player = new Player();
-
-        //string jsonString = "{\"playerId\":\"8484239823\",\"pseudo\":\"Powai\",\"type\":\"super voleur\",\"level\":\"62\",\"description\":\"c'est un voleur, mais il est super gentil.\"}";
-        //player = JsonUtility.FromJson<Player>(jsonString);
-
         player.pseudo = "golum";
         player.classe = "sorcier";
         player.level = "666";
         player.special = "42000";
         player.description = "perdu dans une caverne";
-
         InsertPlayer(player);
 
-        GetPlayersInfos();
 
-
-        
-
-        //Player playerInstance = new Player();
-        //playerInstance.playerId = "8484239823";
-        //playerInstance.pseudo = "Powai";
-        //playerInstance.type = "Random Nick";
-        //playerInstance.level = "10";
-        //playerInstance.description = "Random Nick";
-
-        //Convert to JSON
-        //string playerToJson = JsonUtility.ToJson(playerInstance);
-        //Debug.Log(playerToJson);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void externUpdatePlayer0Name()
     {
-        
+        // Mettre à jour les infos d'un joueur dans la DB    /!
+        Player tempPlayer = listPlayers[0];
+        tempPlayer.pseudo = "superGuerrierdeFouFurieuxOmegaCraque" + Random.Range(0, 30000).ToString();
+        UpdatePlayer(tempPlayer);
+
+        GetPlayersInfos();
+        //displayPlayers();
+        uiManager.UpdateUI(listPlayers);
+
     }
 
 
@@ -74,16 +63,6 @@ public class DatabaseAccess : MonoBehaviour
     {
         var infos = collection.FindAsync(new BsonDocument());
         var data = await infos;
-
-        //Debug.Log(data.ToList()[0].ToString());
-        /*
-        string test = data.ToList()[0].ToString();
-        test = JsonAdapterToClass(test);
-
-
-        Player player = JsonUtility.FromJson<Player>(test);
-        player.callTheToString();
-        */
         
         foreach (var playerJson in data.ToList())
         {
@@ -91,11 +70,9 @@ public class DatabaseAccess : MonoBehaviour
             temp = JsonAdapterToClass(temp);
             Player player = JsonUtility.FromJson<Player>(temp);
             listPlayers.Add(player);
-            //player.callTheToString();
         }
 
-        displayPlayers();
-
+        //displayPlayers();
     }
 
 
@@ -124,6 +101,12 @@ public class DatabaseAccess : MonoBehaviour
             specialType = "mana";
         }
         return new BsonDocument { { "pseudo", p.pseudo }, {"classe", p.classe }, { "level", p.level }, { specialType, p.special }, {"description", p.description } };
+    }
+
+    private void UpdatePlayer(Player new_p)
+    {
+        collection.FindOneAndReplace(p => p["_id"] == ObjectId.Parse(new_p._id), createPlayerJson(new_p)); 
+
     }
 
     private void InsertPlayer(Player p)

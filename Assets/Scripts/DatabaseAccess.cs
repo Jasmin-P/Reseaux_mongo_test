@@ -34,13 +34,13 @@ public class DatabaseAccess : MonoBehaviour
 
 
         // Ajouter un joueur dans la DB
-        Player player = new Player();
-        player.pseudo = "golum";
-        player.classe = "sorcier";
-        player.level = "666";
-        player.special = "42000";
-        player.description = "perdu dans une caverne";
-        InsertPlayer(player);
+        //Player player = new Player();
+        //player.pseudo = "golum";
+        //player.classe = "sorcier";
+        //player.level = "666";
+        //player.special = "42000";
+        //player.description = "perdu dans une caverne";
+        //InsertPlayer(player);
 
 
     }
@@ -54,7 +54,7 @@ public class DatabaseAccess : MonoBehaviour
 
         GetPlayersInfos();
         //displayPlayers();
-        uiManager.UpdateUI(listPlayers);
+        uiManager.UpdateUI(ref listPlayers);
 
     }
 
@@ -63,7 +63,8 @@ public class DatabaseAccess : MonoBehaviour
     {
         var infos = collection.FindAsync(new BsonDocument());
         var data = await infos;
-        
+        listPlayers.Clear();
+
         foreach (var playerJson in data.ToList())
         {
             string temp = playerJson.ToString();

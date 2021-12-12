@@ -33,8 +33,9 @@ public class UIManager : MonoBehaviour
         foreach (var player in players)
         {           
             playersUI.Add(player);
-            
-            cards.Add(Instantiate<GameObject>(prefabCarte,cardHand.transform)); // to modify           
+            var card = Instantiate<GameObject>(prefabCarte, cardHand.transform);
+            cards.Add(card); // to modify
+            card.GetComponent<Card>().playerIndex = players.IndexOf(player);
         }
 
         UpdateUICardsValues();
@@ -62,5 +63,11 @@ public class UIManager : MonoBehaviour
             card.transform.position = Vector3.zero + new Vector3(pos * 18 / cards.Count - 8, 0, 0);
             pos += 1;
         }
+    }
+
+    public void ClickPlayer(int index)
+    {
+
+
     }
 }

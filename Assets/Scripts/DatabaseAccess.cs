@@ -15,7 +15,7 @@ public class DatabaseAccess : MonoBehaviour
     MongoClient client;
     IMongoDatabase database;
     IMongoCollection<BsonDocument> collection;
-    List<Player> listPlayers;
+    public List<Player> listPlayers;
 
     [SerializeField]
     UIManager uiManager;
@@ -104,7 +104,7 @@ public class DatabaseAccess : MonoBehaviour
         return new BsonDocument { { "pseudo", p.pseudo }, {"classe", p.classe }, { "level", p.level }, { specialType, p.special }, {"description", p.description } };
     }
 
-    private void UpdatePlayer(Player new_p)
+    public void UpdatePlayer(Player new_p)
     {
         collection.FindOneAndReplace(p => p["_id"] == ObjectId.Parse(new_p._id), createPlayerJson(new_p)); 
 

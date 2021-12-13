@@ -10,6 +10,16 @@ public class UIManager : MonoBehaviour
     GameObject prefabCarte;
     List<Player> playersUI;
     List<GameObject> cards;
+    [SerializeField]
+    Sprite spriteWarrior;
+    [SerializeField]
+    Sprite spriteMage;
+    [SerializeField]
+    Sprite spriteWarriorCard;
+    [SerializeField]
+    Sprite spriteMageCard;
+    [SerializeField]
+    Sprite spriteOtherCard;
 
     [SerializeField]
     GameObject cardHand;
@@ -36,6 +46,26 @@ public class UIManager : MonoBehaviour
             var card = Instantiate<GameObject>(prefabCarte, cardHand.transform);
             cards.Add(card); // to modify
             card.GetComponent<Card>().playerIndex = players.IndexOf(player);
+            if (player.classe == "guerrier")
+            {
+                Transform sprite = card.transform.Find("innerSprite");
+                sprite.GetComponent<SpriteRenderer>().sprite = spriteWarrior;
+                sprite.localScale = new Vector3(0.1126711f, 0.09449375f, 0.3328631f);
+                card.GetComponent<SpriteRenderer>().sprite = spriteWarriorCard;
+                
+
+            }
+            else if (player.classe == "sorcier")
+            {
+                Transform sprite =  card.transform.Find("innerSprite");
+                sprite.GetComponent<SpriteRenderer>().sprite = spriteMage;
+                sprite.localScale = new Vector3(0.2454315f, 0.2058357f, 0.7250757f);
+                card.GetComponent<SpriteRenderer>().sprite = spriteMageCard;
+            }
+            else
+            {
+                card.GetComponent<SpriteRenderer>().sprite = spriteOtherCard;
+            }
         }
 
         UpdateUICardsValues();

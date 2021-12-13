@@ -513,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1265033973
 RectTransform:
   m_ObjectHideFlags: 0
@@ -838,7 +838,7 @@ Camera:
   far clip plane: 1167.55
   field of view: 60
   orthographic: 1
-  orthographic size: 5.81
+  orthographic size: 5.71
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -862,7 +862,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1706161568}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: -0.09, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -912,6 +912,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   listPlayers: []
+  refreshTime: 1
   uiManager: {fileID: 1908193709}
 --- !u!1 &1908193704
 GameObject:
@@ -1028,4 +1029,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabCarte: {fileID: 7151994070124928038, guid: 02702463b91ea1148a62089f8220fa70, type: 3}
+  spriteWarrior: {fileID: 21300000, guid: 957cd2bb35c311d42b3aa1372d3f26ea, type: 3}
+  spriteMage: {fileID: 21300000, guid: 53d6235027574404d985c95f60846f97, type: 3}
+  spriteWarriorCard: {fileID: 21300000, guid: 4af5446d4cc715845a3d76b0b7212856, type: 3}
+  spriteMageCard: {fileID: 21300000, guid: 8d3fad9a9d99b924d8d711c0b1cc3499, type: 3}
+  spriteOtherCard: {fileID: 21300000, guid: 58c50e84841daad408e57e18afeb3644, type: 3}
   cardHand: {fileID: 311131807}

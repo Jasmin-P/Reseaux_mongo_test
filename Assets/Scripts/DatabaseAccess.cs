@@ -16,6 +16,8 @@ public class DatabaseAccess : MonoBehaviour
     IMongoDatabase database;
     IMongoCollection<BsonDocument> collection;
     public List<Player> listPlayers;
+    [SerializeField]
+    float refreshTime = 2;
 
     [SerializeField]
     UIManager uiManager;
@@ -30,9 +32,8 @@ public class DatabaseAccess : MonoBehaviour
         collection = database.GetCollection<BsonDocument>("players");
 
 
+
         GetPlayersInfos();
-
-
         // Ajouter un joueur dans la DB
         //Player player = new Player();
         //player.pseudo = "golum";
@@ -42,7 +43,9 @@ public class DatabaseAccess : MonoBehaviour
         //player.description = "perdu dans une caverne";
         //InsertPlayer(player);
 
-
+        //GetPlayersInfos();
+        //externUpdatePlayer0Name();
+        StartCoroutine(getDataInit());
     }
 
     public void externUpdatePlayer0Name()
@@ -115,10 +118,19 @@ public class DatabaseAccess : MonoBehaviour
         collection.InsertOne(createPlayerJson(p));
     }
 
+    IEnumerator getDataInit()
+    {
+        yield return new WaitForSeconds(5);
+        //GetPlayersInfos();
+        externUpdatePlayer0Name();
+        StartCoroutine(getData());
+    }
 
     IEnumerator getData()
     {
-
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(refreshTime);
+        //GetPlayersInfos();
+        externUpdatePlayer0Name();
+        StartCoroutine(getData());
     }
 }
